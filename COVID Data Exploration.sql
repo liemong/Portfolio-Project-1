@@ -12,7 +12,8 @@ SELECT
 	Population, 
 	total_cases, 
 	(total_cases/population)*100 AS PercentPopulationWithCOVID
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 ORDER BY 
 	Location, 
 	Date
@@ -26,7 +27,8 @@ SELECT
 	total_cases, 
 	total_deaths, 
 	(total_deaths/total_cases)*100 AS DeathPercentage
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	total_cases > 0
 ORDER BY 
@@ -41,7 +43,8 @@ SELECT
 	Population, 
 	MAX(total_cases) AS HighestCOVIDCases, 
 	MAX((total_cases/population))*100 AS PercentPopulationWithCOVID
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	continent NOT LIKE ''
 GROUP BY 
@@ -55,7 +58,8 @@ ORDER BY
 SELECT 
 	Location, 
 	MAX(total_deaths) as TotalDeaths 
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	continent NOT LIKE ''
 GROUP BY 
@@ -71,7 +75,8 @@ SELECT
 	total_cases, 
 	total_deaths, 
 	(total_deaths/total_cases)*100 AS DeathPercentage
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	total_cases > 0
 ORDER BY 
@@ -87,7 +92,8 @@ SELECT
 	MAX(people_fully_vaccinated) AS people_fully_vaccinated,
 	MAX(people_vaccinated/population) AS '% pop_partially_vaccinated', 
 	MAX(people_fully_vaccinated/population) AS '% pop_fully_vaccinated'
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	continent NOT LIKE '' -- The null values were put as blanks for this column
 GROUP BY 
@@ -100,7 +106,8 @@ SELECT
 	Continent,
 	MAX(people_vaccinated_per_hundred) AS people_vaccinated_per_hundred,
 	MAX(gdp_per_capita) AS gdp_per_capita
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	continent NOT LIKE '' 
 GROUP BY 
@@ -115,7 +122,8 @@ SELECT
 	Population, 
 	MAX(total_cases) AS HighestCOVIDCases, 
 	MAX((total_cases/population))*100 AS PercentPopulationWithCOVID
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	continent LIKE '' AND 
 	Location NOT IN ('World','European Union','High Income','Upper middle income','Lower middle income', 'Low income')
@@ -129,10 +137,16 @@ ORDER BY
 SELECT 
 	location, 
 	MAX(total_deaths) as TotalDeaths 
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	Continent LIKE '' AND 
-	Location NOT IN ('World','European Union','High Income','Upper middle income','Lower middle income', 'Low income')
+	Location NOT IN ('World',
+			'European Union',
+			'High Income',
+			'Upper middle income',
+			'Lower middle income', 
+			'Low income')
 GROUP BY 
 	location
 ORDER BY 
@@ -150,14 +164,16 @@ SELECT
 	Population, 
 	New_Vaccinations,
 	SUM(new_vaccinations) OVER (PARTITION BY Location ORDER BY Location, Date) AS RollingPeopleVaccinated
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	Continent NOT LIKE '' 
 )
 SELECT 
 	*, 
 	(RollingPeopleVaccinated/population)*100 AS '% RollingPeopleVaccinated'
-FROM PopvsVac
+FROM 
+	PopvsVac
 
 
 -- Creating views from some queries that may be used for visuals
@@ -175,7 +191,8 @@ SELECT
 	MAX(people_fully_vaccinated) AS people_fully_vaccinated,
 	MAX(people_vaccinated/population) AS '% pop_partially_vaccinated', 
 	MAX(people_fully_vaccinated/population) AS '% pop_fully_vaccinated'
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	continent NOT LIKE '' 
 GROUP BY 
@@ -194,7 +211,8 @@ SELECT
 	Continent,
 	MAX(people_vaccinated_per_hundred) AS people_vaccinated_per_hundred,
 	MAX(gdp_per_capita) AS gdp_per_capita
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	continent NOT LIKE '' 
 GROUP BY 
@@ -218,14 +236,16 @@ SELECT
 	Population, 
 	New_Vaccinations,
 	SUM(new_vaccinations) OVER (PARTITION BY Location ORDER BY Location, Date) AS RollingPeopleVaccinated
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	Continent NOT LIKE ''
 )
 SELECT 
 	*, 
 	(RollingPeopleVaccinated/population)*100 AS '% RollingPeopleVaccinated'
-FROM PopvsVac
+FROM 
+	PopvsVac
 GO
 
 
@@ -240,8 +260,10 @@ SELECT
 	total_cases, 
 	total_deaths, 
 	(total_deaths/total_cases)*100 AS DeathPercentage
-FROM PortfolioProject..CovidData
-WHERE total_cases > 0
+FROM 
+	PortfolioProject..CovidData
+WHERE 
+	total_cases > 0
 GO
 
 
@@ -253,7 +275,8 @@ CREATE VIEW CovidDeathByLocation AS
 SELECT 
 	Location, 
 	MAX(total_deaths) AS total_deaths
-FROM PortfolioProject..CovidData
+FROM 
+	PortfolioProject..CovidData
 WHERE 
 	continent NOT LIKE '' 
 GROUP BY 
