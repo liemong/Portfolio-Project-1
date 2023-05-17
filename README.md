@@ -4,7 +4,7 @@ Link to the dashboard on Tableau Public:
 
 
 ## Data Source
-This dashboard uses COVID related data from: 
+This dashboard uses COVID related data from 03/01/2020 to 26/04/2023 from: 
 <br /> https://ourworldindata.org/covid-vaccinations
 
 ## Data Documentation
